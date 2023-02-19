@@ -7,8 +7,11 @@ Created on Wed Dec  9 17:45:50 2020
 
 import numpy as np
 
-class Property: #class for stats analysis
-    
+
+class Property:
+    """
+    Statistical indicators for each property.
+    """
     def __init__(self, values):
         self.values = values
         self.std = np.std(self.values)

@@ -46,19 +46,16 @@ class Image:
         self.grayscale = rgb2gray(self.gauss)
         self.gauss_2 = gaussian(self.grayscale)
         self.uint = img_as_ubyte(self.gauss_2)
-        
-        
+
         self.thresh = threshold_otsu(self.uint)    #otsu threshold
         self.binary = self.uint > self.thresh
         
         #self.multi_thresh = threshold_multiotsu(self.gauss_2, classes=2)  #multi threshold
         #self.binary = np.digitize(self.gauss_2, bins=self.multi_thresh)
-        
-        
+
         #self.local_thresh = skimage.filters.threshold_local(self.uint, 399) #adaptive
         #self.binary = self.uint > self.local_thresh
-        
-        
+
         self.mu = skimage.measure.moments_central(self.binary) #Hu moments
         self.nu = skimage.measure.moments_normalized(self.mu)
         self.hu = skimage.measure.moments_hu(self.nu)
@@ -89,7 +86,7 @@ class Image:
         self.pixels_1 = 0
         self.pixels_2 = 0
         self.pixels_3 = 0
-        for i in range(5,250):
+        for i in range(5, 250):
             self.rgb_mean_1 += self.histogram_1[0][i]*i
             self.pixels_1 += self.histogram_1[0][i]
 
@@ -103,35 +100,37 @@ class Image:
         self.rgb_mean_2 /= self.pixels_2
         self.rgb_mean_3 /= self.pixels_3
 
-        #features vector creation. can choose which features to append  
+        #  Feature vector creation. can choose which features to append
         self.vector = []
-        
+
+        # HU
         for i in range(2):
             self.vector.append(self.hu[i])
-            
+
+        # GLCM
         #for i in range(4):
         #    self.vector.append(self.glcm_props[0][i])
-        
+
+        # Roundness
         self.vector.append(self.roundness)
-        
+
+        # Perimeter
         #self.vector.append(self.perimeter_func)
-        
+
+        # RGB Channels mean
         self.vector.append(self.rgb_mean_1)
         self.vector.append(self.rgb_mean_2)
         self.vector.append(self.rgb_mean_3)
-        
         
     def calculate_perimeter_and_area(self):
         for i in range(len(self.binary)):
             for j in range(len(self.binary[0])):
                 if self.binary[i][j]:
                     if False in self.check_surroundings(self.binary, i, j):
-                        self.perimeter +=1
+                        self.perimeter += 1
                 else:
-                    self.area +=1
-        
-                            
-        
+                    self.area += 1
+
     def check_surroundings(self, array, i, j):
         surroundings = []
         for m in range(-1, 2):
