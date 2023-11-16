@@ -19,6 +19,7 @@ from skimage.filters.rank import autolevel
 from skimage.transform import resize
 from skimage.filters import gaussian
 from skimage import img_as_ubyte
+from scipy.ndimage import measurements
 
 import numpy as np
 
@@ -123,21 +124,21 @@ class Image:
         self.vector.append(self.rgb_mean_3)
         
     def calculate_perimeter_and_area(self):
-        for i in range(len(self.binary)):
-            for j in range(len(self.binary[0])):
-                if self.binary[i][j]:
-                    if False in self.check_surroundings(self.binary, i, j):
-                        self.perimeter += 1
-                else:
-                    self.area += 1
+        """
+        Calculate the perimeter and area of a binary image.
 
-    def check_surroundings(self, array, i, j):
-        surroundings = []
-        for m in range(-1, 2):
-            for n in range(-1, 2):
-                if i+m == j+n: continue
-                try:    
-                    surroundings.append(array[i+m][j+n])
-                except:
-                    continue
-        return surroundings
+        Parameters:
+        - binary_image: NumPy array representing the binary image (0 or 1)
+
+        Returns:
+        - perimeter: Perimeter of the shape in the binary image.
+        - area: Area of the shape in the binary image.
+        """
+        # Label connected components in the binary image
+        labeled_image, num_labels = measurements.label(self.binary)
+
+        # Calculate the perimeter of the labeled shape
+        self.perimeter = measurements.perimeter(self.binary, labels=labeled_image)
+
+        # Calculate the area of the labeled shape
+        self.area = measurements.sum(self.binary, labels=labeled_image)
