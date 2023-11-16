@@ -20,24 +20,24 @@ def run():
     tomato_images = []
     orange_images = []
     lemon_images = []
-    
-    banana_properties = {'txt props':[], 'hu moments':[], 'perimeter':0}
-    tomato_properties = {'txt props':[], 'hu moments':[], 'perimeter':0}
-    orange_properties = {'txt props':[], 'hu moments':[], 'perimeter':0}
-    lemon_properties= {'txt props':[], 'hu moments':[], 'perimeter':0}
-    
-    banana = {'images':banana_images, 'properties':banana_properties, 'color':'green'}
-    tomato = {'images':tomato_images, 'properties':tomato_properties, 'color':'red'}
-    orange = {'images':orange_images, 'properties':orange_properties, 'color':'orange'}
-    lemon= {'images':lemon_images,  'properties':lemon_properties, 'color':'yellow'}
-    
-    fruits = {'banana':banana, 'tomato':tomato, 'orange':orange, 'lemon':lemon}
-    
+
+    banana_properties = {'txt props': [], 'hu moments': [], 'perimeter': 0}
+    tomato_properties = {'txt props': [], 'hu moments': [], 'perimeter': 0}
+    orange_properties = {'txt props': [], 'hu moments': [], 'perimeter': 0}
+    lemon_properties = {'txt props': [], 'hu moments': [], 'perimeter': 0}
+
+    banana = {'images': banana_images, 'properties': banana_properties, 'color': 'green'}
+    tomato = {'images': tomato_images, 'properties': tomato_properties, 'color': 'red'}
+    orange = {'images': orange_images, 'properties': orange_properties, 'color': 'orange'}
+    lemon = {'images': lemon_images, 'properties': lemon_properties, 'color': 'yellow'}
+
+    fruits = {'banana': banana, 'tomato': tomato, 'orange': orange, 'lemon': lemon}
+
     testing_images = []
 
     # path to the image folder
     path = '/frutas/'
-    
+
     training_images = 6
     # testing = total - training
     total_images = 16
